@@ -8,11 +8,7 @@
     <title>Dashboard</title>
 </head>
 <body>
-    <h1>Dashboard</h1>
-    <p>Welcome to your dashboard, {{ auth()->user()->name }}!</p>
-    <form action="{{ route('logout') }}" method="POST">
-        @csrf
-        <button type="submit">Logout</button>
-    </form>
+    <h2>Dashboard</h2>
+    <p>Welcome to the dashboard, {{ Auth::user()->name }}!</p>
 </body>
 </html>

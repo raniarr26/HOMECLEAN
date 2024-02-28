@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Item;
+
 
 class ListItemController extends Controller
 {
-    public function showListItems()
+    public function index()
     {
-        return view('list_items');
+        $items = Item::all();
+        return view('list_item', compact('items'));
     }
 }

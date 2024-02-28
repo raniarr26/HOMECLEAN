@@ -1,4 +1,4 @@
-<!-- resources/views/listitem.blade.php -->
+<!-- resources/views/list_item.blade.php -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,8 +8,11 @@
     <title>List Item</title>
 </head>
 <body>
-    <h1>List Item</h1>
-    <p>Item ID: {{ $id }}</p>
-    <p>Item Name: {{ $name }}</p>
+    <h2>List Item</h2>
+    <ul>
+        @foreach($items as $item)
+            <li>{{ $item->name }}</li>
+        @endforeach
+    </ul>
 </body>
 </html>
