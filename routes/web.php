@@ -7,7 +7,6 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\DashboardController;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,12 +17,13 @@ use App\Http\Controllers\DashboardController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::get('/welcome', function () {
     return view('welcome');
 });
 
 Route::get('/user/{id}', function ($id) {
-    return 'user dengan ID ' . $id;
+    return 'User dengan ID ' . $id;
 });
 
 Route::prefix('admin')->group(function () {
