@@ -1,21 +1,32 @@
 <!-- resources/views/auth/login.blade.php -->
+<form method="POST" action="{{ route('login') }}">
+    @csrf
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
-<body>
-    <h1>Login</h1>
-    <form action="{{ route('login') }}" method="POST">
-        @csrf
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email"><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password"><br><br>
-        <button type="submit">Login</button>
-    </form>
-</body>
-</html>
+    <!-- Email Address -->
+    <div>
+        <label for="email">Email</label>
+        <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus />
+        @error('email')
+            <span>{{ $message }}</span>
+        @enderror
+    </div>
+
+    <!-- Password -->
+    <div>
+        <label for="password">Password</label>
+        <input id="password" type="password" name="password" required autocomplete="current-password" />
+        @error('password')
+            <span>{{ $message }}</span>
+        @enderror
+    </div>
+
+    <!-- Remember Me -->
+    <div>
+        <input type="checkbox" id="remember_me" name="remember">
+        <label for="remember_me">Remember me</label>
+    </div>
+
+    <div>
+        <button>Login</button>
+    </div>
+</form>
