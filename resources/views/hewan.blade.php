@@ -3,8 +3,8 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>Nama</th>
-            <th>Jenis</th>
+            <th>nama</th>
+            <th>jenis</th>
         </tr>
     </thead>
     <tbody>
