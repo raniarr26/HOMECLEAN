@@ -54,3 +54,5 @@ Route::get('/user/products/create', [ProductController::class, 'create'])->name(
 Route::post('/user/products/store', [ProductController::class, 'store'])->name('user.products.store');
 // Routes untuk area admin
 Route::get('/admin/home', [AdminController::class, 'index']);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

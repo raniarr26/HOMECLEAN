@@ -6,21 +6,23 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function index()
     {
-        $data=[
-            'nama'=>'doraemon',
-            'pekerjaan'=>'develper'
-        ];
-        return view('home')->with($data);
-    }
-    //or you can use this 
-    //$nama ="doraemon";
-    //$pekerjaan="student";
-    //retrun view ('home',compact('nama','kerjaan'));
-    public function contact()
-    {
-        return view ('contact');
+        return view('home');
     }
 }
-
