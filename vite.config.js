@@ -3,6 +3,10 @@ import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
+    build: {
+        manifest: true,
+        outDir: 'public/build', // pastikan ini sesuai dengan lokasi manifest.json yang diharapkan
+      },
     plugins: [
         laravel({
             input: [
