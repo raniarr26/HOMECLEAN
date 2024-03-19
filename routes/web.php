@@ -1,3 +1,4 @@
+// web.php
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -14,19 +15,6 @@ use App\Http\Controllers\RegisterController;
 
 Route::get('/welcome', function () {
     return view('welcome');
-});
-
-Route::get('/user/{id}', function ($id) {
-    return 'user dengan ID ' . $id;
-});
-
-Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', function () {
-        return 'Admin Dashboard';
-    });
-    Route::get('/users', function () {
-        return 'Admin Users';
-    });
 });
 
 Route::get('/', [HomeController::class, 'index']);
@@ -55,4 +43,3 @@ Route::post('/user/products/store', [ProductController::class, 'store'])->name('
 // Routes untuk area admin
 Route::get('/admin/home', [AdminController::class, 'index']);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
