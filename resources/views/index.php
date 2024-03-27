@@ -11,5 +11,7 @@
     <h1>Welcome to My Webpage</h1>
     <img src="/images/image1.jpg" alt="Image 1">
     <img src="/images/image2.png" alt="Image 2">
+    <a href="login.blade.php">login</a>
+    
 </body>
 </html>
