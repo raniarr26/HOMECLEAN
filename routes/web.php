@@ -9,8 +9,17 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\hewanController; 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductttController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\IndexController;
+use App\Http\Controllers\ProductController;
+
+Route::get('/products', [ProductController::class, 'index']);
+
+
+
+Route::get('/index', [IndexController::class, 'index']);
+
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -36,9 +45,9 @@ Route::post('/register', [RegisterController::class, 'register']);
 
 // Routes untuk area pengguna (user)
 Route::get('/user/home', [UserController::class, 'index']);
-Route::get('/user/products', [ProductController::class, 'index'])->name('user.products.index');
-Route::get('/user/products/create', [ProductController::class, 'create'])->name('user.products.create');
-Route::post('/user/products/store', [ProductController::class, 'store'])->name('user.products.store');
+Route::get('/user/product', [ProductttController::class, 'index'])->name('user.products.index');
+Route::get('/user/product/create', [ProductttController::class, 'create'])->name('user.products.create');
+Route::post('/user/product/store', [ProducttttController::class, 'store'])->name('user.products.store');
 // Routes untuk area admin
 Route::get('/admin/home', [AdminController::class, 'index']);
 
