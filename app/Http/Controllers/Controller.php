@@ -30,8 +30,43 @@ class Controller extends BaseController
     }
     public function contact()
     {
-        return view('user.layout.index',[
-            'title'  => 'Home',
+        return view('user.page.contact',[
+            'title'  => 'contact',
         ]);
     }
+    public function checkout()
+    {
+        return view('user.page.checkout',[
+            'title'  => 'checkout',
+        ]);
+    }
+    public function admin()
+    {
+        return view('admin.layout.index',[
+            'title'  => 'admin dashboard',
+        ]);
+    
+}
+public function product()
+{
+    return view('admin.page.product',[
+        'title'  => 'admin product',
+    ]);
+}
+ public function report()
+    {
+        return view('admin.page.report',[
+            'title'  => 'admin report',
+        ]);
+    
+}
+public function user()
+    {
+        return view('admin.page.user',[
+            'title'  => 'admin user',
+        ]);
+    
+}
+
+
 }

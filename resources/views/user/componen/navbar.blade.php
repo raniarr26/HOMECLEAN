@@ -13,12 +13,12 @@
           <a class="nav-link" href="/jasa">Jasa</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/transaksi" >transaksi</a>
+          <a class="nav-link " href="/contact" >contact</a>
         </li>
       </ul>
       <form class="d-flex gap-4 align-item-center">
         
-        <button class="btn btn-outline-success" type="submit">Login/register</button>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Login/register</button>
       </form>
     </div>
   </div>

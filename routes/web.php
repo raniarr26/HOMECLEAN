@@ -27,3 +27,8 @@ Route::get('/', [Controller::class,'index'])->name('Home');
 Route::get('/jasa', [Controller::class,'jasa'])->name('jasa');
 Route::get('/transaksi', [Controller::class,'transaksi'])->name('transaksi');
 Route::get('/contact', [Controller::class,'contact'])->name('contact');
+Route::get('/checkout', [Controller::class,'checkout'])->name('checkout');
+
+Route::get('/admin', [Controller::class,'admin'])->name('admin');
+Route::get('/report', [Controller::class,'report'])->name('report');
+Route::get('/user', [Controller::class,'user'])->name('user');
