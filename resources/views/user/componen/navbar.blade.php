@@ -20,6 +20,9 @@
         
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Login/register</button>
       </form>
+      <i class="fa-solid fa-bag-shopping" >
+        <a href="/checkout"></a>
+      </i>
     </div>
   </div>
 </nav>

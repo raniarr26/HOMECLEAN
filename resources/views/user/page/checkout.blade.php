@@ -5,28 +5,24 @@
     <div class="col-sm-10">
         <div class="card">
             <div class="card-body">
-            <h3>Masukan Alamat Penerima</h3>        
+            <h3>Masukan Data anda</h3>        
                 <div class="row">
-                <label for="nama_penerima" class="col-form-label col-sm-3">Nama Penerima</label>
-                <input type="text" class="form-control col-sm-9" id="" name="nama Penerima" placeholder="Ma">
+                <label for="nama" class="col-form-label col-sm-3">Nama</label>
+                <input type="text" class="form-control col-sm-9" id="" name="nama" placeholder="Masukan Nama Anda">
             </div>
         <div class="row">
-            <label for="alamat_penerima" class="col-form-label col-sm-3">Nama Penerima</label>
-            <input type="text" class="form-control col-sm-9" id="alamat_penerima" name="Masukan Alamat Anda">
+            <label for="alamat" class="col-form-label col-sm-3">Alamat</label>
+            <input type="text" class="form-control col-sm-9" id="alamat" name="Masukan Alamat Anda">
         </div>
         <div class="row">
-            <label for="nama_penerima" class="col-form-label col-sm-3">Nama Penerima</label>
-            <input type="text" class="form-control col-sm-9" placeholder="Masukan Nama Penerima">
+            <label for="Nohp" class="col-form-label col-sm-3">Nomor Hp</label>
+            <input type="text" class="form-control col-sm-9" placeholder="Masukan Nomor Handphone Anda">
         </div>
-<div class="row">
-<label for="nama_penerima" class="col-form-label col-sm-3">Nama Penerima</label>
-<input type="text" class="form-control col-sm-9" placeholder="Masukan Nama Penerima">
 </div>
-<div class="row">
-<label for="nama_penerima" class="col-form-label col-sm-3">Nama Penerima</label>
-<input type="text" class="form-control col-sm-9" placeholder="Masukan Nama Penerima">
-</div>
-</div>
+    <button class="btn btn-success" >
+            <i class="fas fa-print"></i>
+    print        
+        </button>
 </div>
 </div>
 </div>
