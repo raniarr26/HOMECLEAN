@@ -69,7 +69,9 @@ footer p {
                     <div class="header-title">
                         Home Clean
                     </div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum facere repellendus, magnam maiores porro ut sed eligendi esse architecto debitis quaerat velit incidunt similique, molestiae a cupiditate quia excepturi corrupti!</p>
+                    <p>Selamat datang di Home Clean, solusi terpercaya untuk kebersihan rumah Anda!
+
+Home Clean adalah platform yang didedikasikan untuk menyediakan layanan kebersihan profesional yang memenuhi kebutuhan Anda. Dengan tim ahli yang berpengalaman dan berkomitmen tinggi terhadap kebersihan, kami hadir untuk menjadikan rumah Anda lebih bersih, nyaman, dan sehat.</p>
                 </div>
                 <div class="title-middle">
                     <div class="header-title">

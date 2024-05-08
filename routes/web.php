@@ -31,4 +31,5 @@ Route::get('/checkout', [Controller::class,'checkout'])->name('checkout');
 
 Route::get('/admin', [Controller::class,'admin'])->name('admin');
 Route::get('/report', [Controller::class,'report'])->name('report');
+Route::get('/product',[controller::class,'product'])->name('product');
 Route::get('/user', [Controller::class,'user'])->name('user');
