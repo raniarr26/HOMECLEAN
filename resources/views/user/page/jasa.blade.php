@@ -9,7 +9,7 @@
                 <div class="col-10">
                     <div class="p-2 pt-4" col-6 col-md-4>
                         <div class="card ml-2 mr-2" style="width: 16rem;">
-                            <img src="../assets/img/Area_Rumah/260-1.Tipe 21.png" class="card-img-top" alt="Gambar Produk">
+                            <img src="assets/img/Area_Rumah/260-1.Tipe 21.png" class="card-img-top" alt="Gambar Produk">
                             <div class="card-body bg-light">
                                 <h5 class="card-title">Tipe 21</h5>
                                 <p class="card-text">6 x 12</p>
@@ -34,7 +34,7 @@
                 <div class="col-10">
                     <div class="p-2 pt-4" col-6 col-md-4>
                         <div class="card ml-2 mr-2" style="width: 16rem;">
-                            <img src="../assets/img/Area_Rumah/260-1.Tipe 21.png" class="card-img-top" alt="Gambar Produk">
+                            <img src="assets/img/Area_Rumah/260-1.Tipe 21.png" class="card-img-top" alt="Gambar Produk">
                             <div class="card-body bg-light">
                                 <h5 class="card-title">Tipe 21</h5>
                                 <p class="card-text">6 x 12</p>
@@ -59,7 +59,7 @@
                 <div class="col-10">
                     <div class="p-2 pt-4" col-6 col-md-4>
                         <div class="card ml-2 mr-2" style="width: 16rem;">
-                            <img src="../assets/img/Area_Rumah/260-1.Tipe 21.png" class="card-img-top" alt="Gambar Produk">
+                            <img src="assets/img/Area_Rumah/260-1.Tipe 21.png" class="card-img-top" alt="Gambar Produk">
                             <div class="card-body bg-light">
                                 <h5 class="card-title">Tipe 21</h5>
                                 <p class="card-text">6 x 12</p>
@@ -84,7 +84,7 @@
                 <div class="col-10">
                     <div class="p-2 pt-4" col-6 col-md-4>
                         <div class="card ml-2 mr-2" style="width: 16rem;">
-                            <img src="../assets/img/Area_Rumah/260-1.Tipe 21.png" class="card-img-top" alt="Gambar Produk">
+                            <img src="assets/img/Area_Rumah/260-1.Tipe 21.png" class="card-img-top" alt="Gambar Produk">
                             <div class="card-body bg-light">
                                 <h5 class="card-title">Tipe 21</h5>
                                 <p class="card-text">6 x 12</p>
