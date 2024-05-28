@@ -103,7 +103,7 @@ footer {
                 </a>
             </li>
             <li class="navbar-item">
-                <a href="#" class="nav-link">
+                <a href="/product" class="nav-link">
                     <div class="d-flex gap-3">
                         <span class="material-icons">inventory</span>
                         <p class="m-0 p-0">Product</p>
@@ -111,7 +111,7 @@ footer {
                 </a>
             </li>
             <li class="navbar-item">
-                <a href="#" class="nav-link">
+                <a href="/user" class="nav-link">
                     <div class="d-flex gap-3">
                         <span class="material-icons">people_alt</span>
                         <p class="m-0 p-0">User Management</p>
@@ -119,7 +119,7 @@ footer {
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="/report">
                     <div class="d-flex gap-3">
                         <span class="material-icons">analytics</span>
                         <p class="m-0 p-0">report</p>

@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Models;
+//namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+//use Illuminate\Database\Eloquent\Factories\HasFactory;
+//use Illuminate\Database\Eloquent\Model;
 
-class product extends Model
-{
-    use HasFactory;
-    protected $table ='product';
-    public $timestamps = true;
-    protected $fillable=[
+//class product extends Model
+//{
+  //  use HasFactory;
+    //protected $table ='product';
+    //public $timestamps = true;
+    //protected $fillable=[
         
-    ]
-}
+    //]
+//}
