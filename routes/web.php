@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Productcontroller;
 use App\Http\Controllers\UserController;
 
 // Rute untuk halaman user
