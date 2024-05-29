@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sections', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->string('thumbnail');
-            $table->longText('content');
-            $table->enum('post_as',['JUMBOTRON','ABOUT'])->nullable();
+        Schema::create('products', function (Blueprint $table) {
+            $table->id('id_product');
+            $table->string('nama_product');
+            $table->decimal('harga', 8, 2);
+            $table->string('size');
+            $table->string('image')->nullable();
+            $table->string('type');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sections');
+        Schema::dropIfExists('products');
     }
 };
