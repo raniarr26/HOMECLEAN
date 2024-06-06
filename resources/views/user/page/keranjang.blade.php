@@ -1,31 +1,26 @@
 @extends('user.layout.index')
 
 @section('content')
-<div class="container mt-5">
+<div class="content mt-5">
     <h2>Keranjang Belanja</h2>
-    @if($cart && $cart->items->count() > 0)
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($cart->items as $item)
-                    <tr>
-                        <td>{{ $item->product->nama_product }}</td>
-                        <td>{{ $item->quantity }}</td>
-                        <td>Rp {{ number_format($item->product->harga, 2, ',', '.') }}</td>
-                        <td>Rp {{ number_format($item->product->harga * $item->quantity, 2, ',', '.') }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+    @if(isset($cart) && $cart->items->count() > 0)
+        <ul class="list-group">
+            @foreach($cart->items as $item)
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <img src="{{ asset('images/' . $item->product->image) }}" alt="{{ $item->product->nama_product }}" style="width: 50px;">
+                            <span>{{ $item->product->nama_product }}</span>
+                        </div>
+                        <div>
+                            <span>Rp {{ number_format($item->product->harga, 2, ',', '.') }}</span>
+                        </div>
+                    </div>
+                </li>
+            @endforeach
+        </ul>
     @else
-        <p>Keranjang Anda kosong.</p>
+        <p>Keranjang belanja Anda kosong.</p>
     @endif
 </div>
 @endsection

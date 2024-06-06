@@ -7,9 +7,15 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
-class AuthController extends Controller
+class UserController extends Controller
 {
-    public function register(Request $request)
+    public function index()
+    {
+        $users = User::all();
+        return view('users.index', compact('users'));
+    }
+
+    public function store(Request $request)
     {
         $request->validate([
             'nama' => 'required|string|max:255',
@@ -31,29 +37,42 @@ class AuthController extends Controller
 
         $user->save();
 
-        return redirect()->route('login')->with('success', 'Registrasi berhasil, silahkan login.');
+        return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
-    public function login(Request $request)
+    public function edit($id)
     {
-        $credentials = $request->only('email', 'password');
+        $user = User::findOrFail($id);
+        return view('users.edit', compact('user'));
+    }
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->intended('dashboard');
-        }
-
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+            'password' => 'nullable|string|min:8|confirmed',
+            'alamat' => 'required|string|max:255',
+            'tlp' => 'required|string|max:15',
         ]);
+
+        $user = User::findOrFail($id);
+        $user->nama = $request->nama;
+        $user->email = $request->email;
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->alamat = $request->alamat;
+        $user->tlp = $request->tlp;
+        $user->save();
+
+        return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
 
-    public function logout(Request $request)
+    public function destroy($id)
     {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect('/');
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
     }
 }

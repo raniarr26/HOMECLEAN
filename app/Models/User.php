@@ -2,29 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class User extends Migration
+class User extends Authenticatable
 {
-    public function up()
-    {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama');
-            $table->string('email')->unique();
-            $table->enum('level', ['admin', 'user'])->default('user');
-            $table->string('username')->unique();
-            $table->string('password');
-            $table->string('alamat');
-            $table->string('tlp');
-            $table->timestamps();
-        });
-    }
+    use HasFactory, Notifiable;
 
-    public function down()
-    {
-        Schema::dropIfExists('users');
-    }
+    protected $fillable = [
+        'nama', 'email', 'username', 'password', 'alamat', 'tlp', 'level',
+    ];
+
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 }

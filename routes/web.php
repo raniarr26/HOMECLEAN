@@ -9,7 +9,6 @@ use App\Http\Controllers\TransaksiDetailController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\JasaController;
 
-
 // Rute untuk halaman user
 Route::get('/', [Controller::class, 'index'])->name('home');
 Route::get('/jasa', [JasaController::class, 'index'])->name('jasa.index');
@@ -40,14 +39,14 @@ Route::prefix('admin')->group(function () {
     Route::get('/report', [Controller::class, 'report'])->name('admin.report');
     Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
     // Rute untuk user
-    Route::get('/admin/page/users', [UserController::class, 'index'])->name('page.users.index');
+    Route::get('/page/users', [UserController::class, 'index'])->name('page.users.index');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
     Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
     Route::post('/users/update/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
-
 });
+
 Route::group(['middleware' => 'auth'], function () {
-    Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
     Route::get('/keranjang', [CartController::class, 'showCart'])->name('cart.show');
+    Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
 });
