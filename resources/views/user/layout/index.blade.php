@@ -10,15 +10,15 @@
 </head>
 <body class="font-sans antialiased bg-gray-100">
     <main>
-        <header>
+    <header>
             @include('user.componen.navbar')
         </header>
         <section class="min-h-screen">
             @yield('content')
         </section>
-        <div class="col-md-4">
-                @include('user.page.keranjang')
-            </div>
+        <footer>
+            @include('user.componen.footer')
+        </footer>
         <style>
             section{
     min-height: 80vh;

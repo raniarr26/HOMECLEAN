@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -10,10 +12,10 @@ use Illuminate\Support\Facades\Hash;
 class AdminUserController extends Controller
 {
     public function index()
-    {
-        $users = User::all();
-        return view('admin.user.index', compact('users'));
-    }
+{
+    $users = User::all();
+    return view('admin.users.index', ['users' => $users]);
+}
 
     public function create()
     {

@@ -1,5 +1,3 @@
-<!-- user/componen/footer.blade.php -->
-
 <footer class="bg-black text-blue py-10">
     <div class="container mx-auto">
         <div class="flex flex-wrap justify-between items-center">

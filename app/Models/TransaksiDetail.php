@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TransaksiDetail extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'transaksi_id',
         'product_id',
@@ -18,10 +19,5 @@ class TransaksiDetail extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
-    }
-
-    public function transaksi()
-    {
-        return $this->belongsTo(Transaksi::class);
     }
 }
