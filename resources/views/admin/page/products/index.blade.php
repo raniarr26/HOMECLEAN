@@ -42,8 +42,8 @@
                                 <td>{{ $product->type }}</td>
                                 <td><img src="{{ asset('images/' . $product->image) }}" width="50" alt="image"></td>
                                 <td>
-                                    <a href="{{ route('page.product.edit', $product->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                    <form action="{{ route('page.product.destroy', $product->id) }}" method="POST" class="d-inline">
+                                    <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                    <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
@@ -55,7 +55,7 @@
                     </table>
                 </div>
                 <div class="card-footer">
-                    <a href="{{ route('page.product.create') }}" class="btn btn-primary">Tambah Produk</a>
+                    <a href="{{ route('products.create') }}" class="btn btn-primary">Tambah Produk</a>
                 </div>
             </div>
         </div>

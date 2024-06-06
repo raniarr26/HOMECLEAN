@@ -16,6 +16,9 @@
         <section class="min-h-screen">
             @yield('content')
         </section>
+        <div class="col-md-4">
+                @include('user.page.keranjang')
+            </div>
         <style>
             section{
     min-height: 80vh;

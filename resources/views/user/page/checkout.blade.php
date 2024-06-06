@@ -21,7 +21,7 @@
 </div>
     <button class="btn btn-success" >
             <i class="fas fa-print"></i>
-    print        
+    Bayar        
         </button>
 </div>
 </div>

@@ -85,7 +85,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('page.products.index') }}" class="nav-link">
+                <a href="{{ route('products.index') }}" class="nav-link">
                     <div class="d-flex gap-3">
                         <span class="material-icons">inventory</span>
                         <p class="m-0 p-0">Product</p>
@@ -122,7 +122,6 @@
     <main>
         @yield('content')
     </main>
-    
 
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>

@@ -7,65 +7,67 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Models\Product;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
-    // Index method to list all products
     public function index()
     {
         $products = Product::all();
-        return view('admin.page.products.index', compact('products'));
+    
+        return view('admin.page.products.index', compact('products'), [
+            'title' => 'Products index',
+        ]);
     }
 
-    // Show method to display a single product
     public function show($id)
     {
         $product = Product::findOrFail($id);
-        return view('admin.page.products.show', compact('product'));
+        return view('admin.page.products.show', compact('product'), [
+            'title' => 'Products show',
+        ]);
     }
 
-    // Create method to show the form for creating a new product
     public function create()
     {
-        return view('admin.page.products.create');
+        return view('admin.page.products.create', [
+            'title' => 'Products Create',
+        ]);
     }
 
-    // Store method to save the new product to the database
     public function store(Request $request)
     {
         $request->validate([
-            'nama_product' => 'required',
+            'nama_product' => 'required|string',
             'harga' => 'required|numeric',
-            'size' => 'required',
+            'size' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'type' => 'required',
+            'type' => 'required|string',
         ]);
 
         $imageName = time().'.'.$request->image->extension();
         $request->image->move(public_path('images'), $imageName);
 
         Product::create([
-            'nama_product' => $request->nama_product,
-            'harga' => $request->harga,
-            'size' => $request->size,
+            'nama_product' => $request->input('nama_product'),
+            'harga' => $request->input('harga'),
+            'size' => $request->input('size'),
             'image' => $imageName,
-            'type' => $request->type,
+            'type' => $request->input('type'),
         ]);
 
-        return redirect()->route('products.index')->with('success','Product created successfully.');
+        return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
 
-    // Edit method to show the form for editing an existing product
     public function edit($id)
     {
         $product = Product::findOrFail($id);
-        return view('admin.page.products.edit', compact('product'));
+        return view('admin.page.products.edit', compact('product'), [
+            'title' => 'Products edit',
+        ]);
     }
 
-    // Update method to save the updated product to the database
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -95,15 +97,14 @@ class ProductController extends BaseController
 
         $product->update($data);
 
-        return redirect()->route('products.index')->with('success','Product updated successfully.');
+        return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
 
-    // Destroy method to delete a product from the database
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
         $product->delete();
 
-        return redirect()->route('products.index')->with('success','Product deleted successfully.');
+        return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
     }
 }

@@ -9,6 +9,16 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    public function showLogin()
+    {
+        return view('modal.login');
+    }
+
+    public function showRegister()
+    {
+        return view('modal.register');
+    }
+
     public function register(Request $request)
     {
         $request->validate([
@@ -19,17 +29,14 @@ class AuthController extends Controller
             'tlp' => 'required|string|max:15',
         ]);
 
-        $user = new User([
+        User::create([
             'nama' => $request->nama,
             'email' => $request->email,
-            'level' => 'user',
             'username' => $request->email,
             'password' => Hash::make($request->password),
             'alamat' => $request->alamat,
             'tlp' => $request->tlp,
         ]);
-
-        $user->save();
 
         return redirect()->route('login')->with('success', 'Registrasi berhasil, silahkan login.');
     }
