@@ -1,7 +1,5 @@
 <?php
-// app/Http/Controllers/LoginController.php
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -11,7 +9,7 @@ class LoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('auth.login');
+        return view('user.modal.login');
     }
 
     public function login(Request $request)
@@ -19,17 +17,17 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            // Authentication passed...
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('home');
         }
 
-        return redirect()->back()->withInput($request->only('email'));
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
-
         return redirect('/');
     }
 }

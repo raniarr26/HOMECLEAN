@@ -30,16 +30,8 @@
             <li class="navbar-item">
                 <a href="#" class="text-white nav-link">
                     <div class="d-flex gap-3">
-                        <span class="material-icons">analytics</span>
-                        <p class="m-0 p-0">Analytics</p>
-                    </div>
-                </a>
-            </li>
-            <li class="navbar-item">
-                <a href="#" class="text-white nav-link">
-                    <div class="d-flex gap-3">
-                        <span class="material-icons">logout</span>
-                        <p class="m-0 p-0">Logout</p>
+                        <span class="material-icons">assignment</span>
+                        <p class="m-0 p-0">Orders</p>
                     </div>
                 </a>
             </li>

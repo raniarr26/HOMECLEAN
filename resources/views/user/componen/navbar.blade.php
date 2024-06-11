@@ -13,14 +13,14 @@
           <a class="nav-link" href="/jasa">Jasa</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/contact" >contact</a>
+          <a class="nav-link" href="/contact">Contact</a>
         </li>
       </ul>
       <form class="d-flex gap-4 align-item-center">
-        
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Login/register</button>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
       </form>
-      <i class="fa-solid fa-bag-shopping" >
+      <i class="fa-solid fa-bag-shopping">
         <a href="/checkout"></a>
       </i>
     </div>
