@@ -23,7 +23,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         if ($user->is_admin) {
-            return redirect()->route('admin.dashboard')->with('success', 'Berhasil login sebagai admin.');
+            return redirect()->route('admin.page.dashboard')->with('success', 'Berhasil login sebagai admin.');
         }
         return redirect()->route('home')->with('success', 'Berhasil login.');
     }
