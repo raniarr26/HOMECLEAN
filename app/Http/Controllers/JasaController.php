@@ -10,8 +10,7 @@ class JasaController extends Controller
     public function index()
     {
         $products = Product::all();
-        return view('user.page.jasa', compact('products'),[
-            'title' => 'user jasa',
-        ]);
+        return view('user.page.jasa', compact('products'))->with('title', 'Jasa');
     }
 }
+

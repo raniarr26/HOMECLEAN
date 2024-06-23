@@ -1,40 +1,60 @@
-@extends('layouts.app')
+@extends('admin.layout.index')
+
+@section('title', 'Manage Users')
 
 @section('content')
-<div class="container">
-    <h1>User Management</h1>
-    @if(session('status'))
-        <div class="alert alert-success">
-            {{ session('status') }}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Manage Users</h1>
+                </div>
+            </div>
         </div>
-    @endif
-    <a href="{{ route('admin.users.create') }}" class="btn btn-primary mb-3">Create New User</a>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($users as $user)
-                <tr>
-                    <td>{{ $user->id }}</td>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->email }}</td>
-                    <td>
-                        <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning">Edit</a>
-                        <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+    </div>
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <a href="{{ route('admin.page.users.create') }}" class="btn btn-primary mb-3">Add New User</a>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">User List</h5>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($users as $user)
+                                    <tr>
+                                        <td>{{ $user->id }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->role }}</td>
+                                        <td>
+                                            <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning">Edit</a>
+                                            <form action="{{ route('admin.users.delete', $user->id) }}" method="POST" style="display:inline-block;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

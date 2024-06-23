@@ -1,40 +1,37 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\TransaksiController;
-use App\Http\Controllers\TransaksiDetailController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\JasaController;
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\JasaController;
 
-
-// Rute untuk halaman user
-Route::get('/', [Controller::class, 'index'])->name('home');
+Route::get('/', [UserController::class, 'index'])->name('index');
+Route::get('/home', [UserController::class, 'home'])->name('home');
 Route::get('/jasa', [JasaController::class, 'index'])->name('jasa.index');
-Route::get('/transaksi', [Controller::class, 'transaksi'])->name('transaksi');
-Route::get('/contact', [Controller::class, 'contact'])->name('contact');
-Route::get('/checkout', [Controller::class, 'checkout'])->name('checkout');
+Route::get('/transaksi', [UserController::class, 'transaksi'])->name('transaksi');
+Route::get('/contact', [UserController::class, 'contact'])->name('contact');
 
-Route::get('/keranjang', [CartController::class, 'showCart'])->name('cart.show');
-Route::post('/cart/add/{productId}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/login', function () {
+    return view('user.page.index'); // Halaman login dengan modal login
+})->name('login');
 
-// Rute untuk login dan register
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('user.modal.login');
-Route::post('/login', [LoginController::class, 'login'])->name('user.modal.login.post');
-Route::post('/register', [UserController::class, 'register'])->name('user.modal.register');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::post('/login', [UserController::class, 'login'])->name('login.post');
+Route::post('/register', [UserController::class, 'register'])->name('register');
+Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
-// Rute admin dengan prefix 'admin'
-Route::prefix('admin')->group(function () {
-    Route::get('/', [Controller::class, 'admin'])->name('admin.dashboard');
-    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
-    
-    // Rute untuk Product CRUD
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.page.dashboard');
+    Route::get('/users', [UserManagementController::class, 'index'])->name('admin.page.users.index');
+    Route::post('/users/{id}/promote', [AdminController::class, 'promoteUser'])->name('admin.page.users.promote');
+    Route::get('/users/create', [AdminController::class, 'createUser'])->name('admin.page.users.create');
+    Route::post('/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
+    Route::get('/users/{id}/edit', [AdminController::class, 'editUser'])->name('admin.users.edit');
+    Route::put('/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
+    Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
     Route::post('/products/store', [ProductController::class, 'store'])->name('products.store');
@@ -42,24 +39,17 @@ Route::prefix('admin')->group(function () {
     Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
     Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
-
-    // Rute untuk User Management
-    Route::get('/user', [Controller::class, 'user'])->name('user');
-    
-    // Transaksi
-    Route::post('/transaksi/store', [TransaksiController::class, 'store'])->name('transaksi.store');
-    Route::get('/transaksi/{id}/details', [TransaksiDetailController::class, 'show'])->name('transaksi.details');
-
-    Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/users', [UserManagementController::class, 'index'])->name('users.index');
-    Route::get('/admin/users/create', [UserManagementController::class, 'create'])->name('users.create');
-    Route::post('/admin/users', [UserManagementController::class, 'store'])->name('users.store');
-    Route::get('/admin/users/{user}/edit', [UserManagementController::class, 'edit'])->name('users.edit');
-    Route::put('/admin/users/{user}', [UserManagementController::class, 'update'])->name('users.update');
-    Route::delete('/admin/users/{user}', [UserManagementController::class, 'destroy'])->name('users.destroy');
-}); 
 });
 
-Auth::routes();
+Route::middleware(['auth'])->group(function () {
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
+    Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+});
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/jasa', [JasaController::class, 'index'])->name('jasa.index');
+Route::get('/transaksi', [UserController::class, 'transaksi'])->name('transaksi');

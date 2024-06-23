@@ -1,4 +1,3 @@
-<!-- resources/views/admin/page/dashboard.blade.php -->
 @extends('admin.layout.index')
 
 @section('title', 'Dashboard')

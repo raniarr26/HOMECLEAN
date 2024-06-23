@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <title>Home Clean | {{$title}}</title>
     <style>
-        body {
+         body {
             font-family: 'Source Sans Pro', sans-serif;
         }
         .sidebar {
@@ -64,9 +64,9 @@
         <h5>Home Clean</h5>
         <hr class="bg-white">
         <ul>
-            <li><a href="#" class="nav-link">Dashboard</a></li>
+            <li><a href="{{ route('admin.page.dashboard') }}" class="nav-link">Dashboard</a></li>
             <li><a href="{{ route('products.index') }}" class="nav-link">Product</a></li>
-            <li><a href="{{ route('users.index') }}" class="nav-link">User Management</a></li>
+            <li><a href="{{ route('admin.page.users.index') }}" class="nav-link">Menambahkan User</a></li>
             <li><a href="/report" class="nav-link">Report</a></li>
             <li><a href="#" class="nav-link">Logout</a></li>
         </ul>

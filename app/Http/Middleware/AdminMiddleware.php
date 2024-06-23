@@ -12,7 +12,7 @@ class AdminMiddleware
         if (Auth::check() && Auth::user()->is_admin) {
             return $next($request);
         }
-        
-        return redirect('/');
+
+        return redirect()->route('home')->with('error', 'Anda tidak memiliki akses ke halaman ini.');
     }
 }

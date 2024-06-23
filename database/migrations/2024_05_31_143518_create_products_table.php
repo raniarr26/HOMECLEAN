@@ -16,15 +16,13 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('nama_product');
-            $table->decimal('harga', 15, 2);  // Updated precision to handle larger numbers
+            $table->string('image');
             $table->string('size');
-            $table->string('image')->nullable();
-            $table->string('type');
+            $table->decimal('harga', 15, 2);
+            $table->string('type'); // Kolom 'type' ditambahkan di sini
             $table->timestamps();
         });
     }
-    
-
 
     /**
      * Reverse the migrations.

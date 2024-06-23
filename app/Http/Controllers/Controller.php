@@ -16,58 +16,66 @@ class Controller extends BaseController
 
     public function index()
     {
-        return view('user.page.Home',[
-            'title'  => 'home',
+        return view('user.page.index', [
+            'title' => 'Halaman Utama',
+        ]);
+    }
+
+    public function home()
+    {
+        return view('user.page.home', [
+            'title' => 'Halaman Home',
         ]);
     }
 
     public function jasa()
     {
-        return view('user.page.jasa',[
-            'title'  => 'Jasa',
+        return view('user.page.jasa', [
+            'title' => 'Jasa',
         ]);
     }
 
     public function transaksi()
     {
-        return view('user.page.transaksi',[
-            'title'  => 'Transaksi',
+        return view('user.page.transaksi', [
+            'title' => 'Transaksi',
         ]);
     }
 
     public function contact()
     {
-        return view('user.page.contact',[
-            'title'  => 'contact',
+        return view('user.page.contact', [
+            'title' => 'Kontak',
         ]);
     }
 
     public function checkout()
     {
-        return view('user.page.checkout',[
-            'title'  => 'checkout',
+        return view('user.page.checkout.index', [
+            'title' => 'Checkout',
         ]);
     }
 
     public function admin()
     {
-        return view('admin.layout.index', [
-            'title'  => 'admin dashboard',
+        return view('admin.page.dashboard', [
+            'title' => 'Dashboard Admin',
         ]);
     }
 
     public function product()
     {
-        // Mengambil data produk dari database
         $products = Product::all();
-        return view('admin.page.products.index', compact('products'),['title' =>  'admin products',]);
+        return view('admin.page.products.index', [
+            'products' => $products,
+            'title' => 'Produk Admin',
+        ]);
     }
 
     public function report()
     {
         return view('admin.page.report', [
-            'title'  => 'admin report',
+            'title' => 'Laporan Admin',
         ]);
     }
-
-    }
+}

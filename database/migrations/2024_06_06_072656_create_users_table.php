@@ -8,7 +8,6 @@ class CreateUsersTable extends Migration
 {
     public function up()
     {
-        
         Schema::dropIfExists('users');
 
         Schema::create('users', function (Blueprint $table) {
@@ -17,7 +16,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->boolean('is_admin')->default(false); // Add this line
+            $table->boolean('is_admin')->default(false);
+            $table->string('role')->default('user'); // Default role user
             $table->rememberToken();
             $table->timestamps();
         });
@@ -27,5 +27,4 @@ class CreateUsersTable extends Migration
     {
         Schema::dropIfExists('users');
     }
-    
 }

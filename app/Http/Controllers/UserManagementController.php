@@ -13,7 +13,8 @@ class UserManagementController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('admin.users.index', compact('users'));
+        return view('admin.page.users.index', compact('users'),['title' => 'Halaman Tambah User',
+        ]);
     }
 
     public function create()

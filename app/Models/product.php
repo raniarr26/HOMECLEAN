@@ -9,11 +9,6 @@ class Product extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'nama_product',
         'harga',
@@ -21,12 +16,4 @@ class Product extends Model
         'image',
         'type',
     ];
-
-    /**
-     * Get the user that owns the product.
-     */
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 }

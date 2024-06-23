@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Darryldecode\Cart\Facades\CartFacade as Cart;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
@@ -15,25 +16,20 @@ class ProductController extends BaseController
     public function index()
     {
         $products = Product::all();
-    
-        return view('admin.page.products.index', compact('products'), [
-            'title' => 'Products index',
-        ]);
+        return view('admin.page.products.index', compact('products'))->with('title', 'Products index');
     }
+
+    // Metode lain...
 
     public function show($id)
     {
         $product = Product::findOrFail($id);
-        return view('admin.page.products.show', compact('product'), [
-            'title' => 'Products show',
-        ]);
+        return view('admin.page.products.show', compact('product'))->with('title', 'Products show');
     }
 
     public function create()
     {
-        return view('admin.page.products.create', [
-            'title' => 'Products Create',
-        ]);
+        return view('admin.page.products.create')->with('title', 'Products Create');
     }
 
     public function store(Request $request)
@@ -63,9 +59,7 @@ class ProductController extends BaseController
     public function edit($id)
     {
         $product = Product::findOrFail($id);
-        return view('admin.page.products.edit', compact('product'), [
-            'title' => 'Products edit',
-        ]);
+        return view('admin.page.products.edit', compact('product'))->with('title', 'Products edit');
     }
 
     public function update(Request $request, $id)
