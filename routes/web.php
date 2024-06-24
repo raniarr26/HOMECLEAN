@@ -8,6 +8,8 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\JasaController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\transaksiController;
 
 Route::get('/', [UserController::class, 'index'])->name('index');
 Route::get('/home', [UserController::class, 'home'])->name('home');
@@ -26,12 +28,12 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.page.dashboard');
     Route::get('/users', [UserManagementController::class, 'index'])->name('admin.page.users.index');
-    Route::post('/users/{id}/promote', [AdminController::class, 'promoteUser'])->name('admin.page.users.promote');
-    Route::get('/users/create', [AdminController::class, 'createUser'])->name('admin.page.users.create');
-    Route::post('/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
-    Route::get('/users/{id}/edit', [AdminController::class, 'editUser'])->name('admin.users.edit');
-    Route::put('/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
-    Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
+    Route::post('/admin/users/{id}/promote', [AdminController::class, 'promoteUser'])->name('admin.page.users.promote');
+    Route::get('/admin/users/create', [AdminController::class, 'createUser'])->name('admin.page.users.create');
+    Route::post('/admin/users', [AdminController::class, 'storeUser'])->name('admin.page.users.store');
+    Route::get('/admin/users/{id}/edit', [AdminController::class, 'editUser'])->name('admin.page.users.edit');
+    Route::put('/admin/users/{id}', [AdminController::class, 'updateUser'])->name('admin.page.users.update');
+    Route::delete('/admin/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.page.users.delete');
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
     Route::post('/products/store', [ProductController::class, 'store'])->name('products.store');
@@ -45,11 +47,20 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
+    Route::post('/checkout/callback', [CheckoutController::class, 'callback'])->name('checkout.callback');
+    Route::get('/checkout/finish', [CheckoutController::class, 'finish'])->name('checkout.finish');
+    Route::get('/checkout/unfinish', [CheckoutController::class, 'unfinish'])->name('checkout.unfinish');
+    Route::get('/checkout/error', [CheckoutController::class, 'error'])->name('checkout.error');
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
     Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
-});
 
-Route::get('/jasa', [JasaController::class, 'index'])->name('jasa.index');
-Route::get('/transaksi', [UserController::class, 'transaksi'])->name('transaksi');
+    // Rute untuk transaksi
+    Route::post('/transaksi/store', [transaksiController::class, 'store'])->name('transaksi.store');
+
+    // Rute untuk resi pembelian
+    Route::get('/receipt/{orderId}', [PurchaseController::class, 'showReceipt'])->name('purchase.receipt');
+    // Rute untuk history pembelian
+    Route::get('/history', [PurchaseController::class, 'history'])->name('purchase.history');
+});

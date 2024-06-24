@@ -1,6 +1,6 @@
 @extends('admin.layout.index')
 
-@section('title', 'Add User')
+@section('title', 'Buat pengguna baru')
 
 @section('content')
 <div class="content-wrapper">
@@ -8,7 +8,7 @@
         <div class="container">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Add User</h1>
+                    <h1 class="m-0">Tambahkan Pengguna</h1>
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Create New User</h5>
-                            <form action="{{ route('admin.users.store') }}" method="POST">
+                            <form action="{{ route('admin.page.users.store') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
                                     <label for="name">Name:</label>

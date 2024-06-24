@@ -12,20 +12,10 @@ class AdminController extends Controller
         $this->middleware('admin');
     }
 
-    public function index()
+    public function users()
     {
         $users = User::all();
-        $title = 'Dashboard'; // Tambahkan baris ini
-        return view('admin.page.dashboard', compact('users', 'title'));
-    }
-
-    public function promoteUser($id)
-    {
-        $user = User::findOrFail($id);
-        $user->is_admin = true;
-        $user->save();
-
-        return redirect()->route('admin.page.users.index')->with('success', 'User promoted to admin');
+        return view('admin.page.users.index', compact('users'), ['title' => 'Kelola Pengguna']);
     }
 
     public function createUser()
@@ -40,16 +30,15 @@ class AdminController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'role' => 'required|in:user,admin', // Pastikan role yang valid
+            'role' => 'required|string|in:user,admin',
         ]);
 
-        // Buat instance baru dari model User
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
-        $user->role = $request->role; // Set role sesuai inputan form
-        $user->save(); // Simpan pengguna baru ke dalam basis data
+        $user->role = $request->role;
+        $user->save();
 
         return redirect()->route('admin.page.users.index')->with('success', 'User created successfully');
     }
@@ -87,5 +76,14 @@ class AdminController extends Controller
         $user->delete();
 
         return redirect()->route('admin.page.users.index')->with('success', 'User deleted successfully');
+    }
+
+    public function promoteUser($id)
+    {
+        $user = User::findOrFail($id);
+        $user->is_admin = true;
+        $user->save();
+
+        return redirect()->route('admin.page.users.index')->with('success', 'User promoted to admin');
     }
 }

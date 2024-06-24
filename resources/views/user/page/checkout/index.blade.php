@@ -2,37 +2,53 @@
 
 @section('content')
 <div class="container mt-5">
-    <h2>Checkout</h2>
-
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
+@php
+    use Darryldecode\Cart\Facades\CartFacade as Cart;
+@endphp
+    <h2>Keranjang Belanja</h2>
+    @if(Cart::getContent()->count() > 0)
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Gambar</th>
+                    <th>Nama Produk</th>
+                    <th>Jumlah</th>
+                    <th>Harga</th>
+                    <th>Total</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(Cart::getContent() as $item)
+                    <tr>
+                        <td><img src="{{ asset('images/' . $item->attributes->image) }}" width="50"></td>
+                        <td>{{ $item->name }}</td>
+                        <td>
+                            <form action="{{ route('cart.update', $item->id) }}" method="POST">
+                                @csrf
+                                <input type="number" name="qty" value="{{ $item->quantity }}" min="1">
+                                <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                            </form>
+                        </td>
+                        <td>Rp {{ number_format($item->price, 2, ',', '.') }}</td>
+                        <td>Rp {{ number_format($item->price * $item->quantity, 2, ',', '.') }}</td>
+                        <td>
+                            <form action="{{ route('cart.remove', $item->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+        <div class="text-right">
+            <h4>Total: Rp {{ number_format(Cart::getTotal(), 2, ',', '.') }}</h4>
+            <a href="{{ route('checkout.index') }}" class="btn btn-success">Checkout</a>
         </div>
+    @else
+        <p>Keranjang belanja kosong.</p>
     @endif
-
-    <form action="{{ route('checkout.process') }}" method="POST">
-        @csrf
-        <div class="row mb-3">
-            <label for="nama" class="col-sm-2 col-form-label">Nama</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama Anda" required>
-            </div>
-        </div>
-        <div class="row mb-3">
-            <label for="alamat" class="col-sm-2 col-form-label">Alamat</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Masukkan Alamat Anda" required>
-            </div>
-        </div>
-        <div class="row mb-3">
-            <label for="no_hp" class="col-sm-2 col-form-label">Nomor Hp</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="no_hp" name="no_hp" placeholder="Masukkan Nomor Handphone Anda" required>
-            </div>
-        </div>
-        <button type="submit" class="btn btn-success">
-            <i class="fas fa-print"></i> Bayar        
-        </button>
-    </form>
 </div>
 @endsection
