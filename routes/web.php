@@ -9,14 +9,16 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\JasaController;
 use App\Http\Controllers\PurchaseController;
-use App\Http\Controllers\transaksiController;
+use App\Http\Controllers\TransaksiController;
 
+// Rute umum untuk halaman-halaman dasar
 Route::get('/', [UserController::class, 'index'])->name('index');
 Route::get('/home', [UserController::class, 'home'])->name('home');
 Route::get('/jasa', [JasaController::class, 'index'])->name('jasa.index');
 Route::get('/transaksi', [UserController::class, 'transaksi'])->name('transaksi');
 Route::get('/contact', [UserController::class, 'contact'])->name('contact');
 
+// Rute untuk autentikasi pengguna
 Route::get('/login', function () {
     return view('user.page.index'); // Halaman login dengan modal login
 })->name('login');
@@ -25,6 +27,35 @@ Route::post('/login', [UserController::class, 'login'])->name('login.post');
 Route::post('/register', [UserController::class, 'register'])->name('register');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
+
+    // Produk
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+
+    // Checkout
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
+    Route::post('/checkout/callback', [CheckoutController::class, 'callback'])->name('checkout.callback');
+    Route::get('/checkout/finish', [CheckoutController::class, 'finish'])->name('checkout.finish');
+    Route::get('/checkout/unfinish', [CheckoutController::class, 'unfinish'])->name('checkout.unfinish');
+    Route::get('/checkout/error', [CheckoutController::class, 'error'])->name('checkout.error');
+
+    // Keranjang
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
+    Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+
+    // Transaksi
+    Route::post('/transaksi/store', [TransaksiController::class, 'store'])->name('transaksi.store');
+
+    // Resi pembelian
+    Route::get('/receipt/{orderId}', [PurchaseController::class, 'showReceipt'])->name('purchase.receipt');
+    // Riwayat pembelian
+    Route::get('/history', [PurchaseController::class, 'history'])->name('purchase.history');
+
+
+
+// Rute untuk admin yang memerlukan autentikasi dan peran admin
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.page.dashboard');
     Route::get('/users', [UserManagementController::class, 'index'])->name('admin.page.users.index');
@@ -43,24 +74,4 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-    Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
-    Route::post('/checkout/callback', [CheckoutController::class, 'callback'])->name('checkout.callback');
-    Route::get('/checkout/finish', [CheckoutController::class, 'finish'])->name('checkout.finish');
-    Route::get('/checkout/unfinish', [CheckoutController::class, 'unfinish'])->name('checkout.unfinish');
-    Route::get('/checkout/error', [CheckoutController::class, 'error'])->name('checkout.error');
-    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-    Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
-    Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
-    Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
-
-    // Rute untuk transaksi
-    Route::post('/transaksi/store', [transaksiController::class, 'store'])->name('transaksi.store');
-
-    // Rute untuk resi pembelian
-    Route::get('/receipt/{orderId}', [PurchaseController::class, 'showReceipt'])->name('purchase.receipt');
-    // Rute untuk history pembelian
-    Route::get('/history', [PurchaseController::class, 'history'])->name('purchase.history');
-});
+// Rute untuk pengguna yang sudah login

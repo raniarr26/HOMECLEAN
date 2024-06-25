@@ -68,11 +68,6 @@
             <span><span></span>Home Clean</span>
         </div>
         <div>
-            <a href="#services">Service & Prices</a>
-            <a href="#faq">FAQ</a>
-            <a href="#contact">Contact us</a>
-            <a href="#blog">Blog</a>
-            <a href="#join">Gabung jadi Mitra</a>
             <a href="#order" class="cta">Pesan Sekarang!</a>
         </div>
     </nav>

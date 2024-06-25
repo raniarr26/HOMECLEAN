@@ -20,32 +20,32 @@ class CheckoutController extends Controller
         Config::$is3ds = config('services.midtrans.is3ds');
     }
 
+    public function index()
+    {
+        $cartItems = Cart::getContent();
+        return view('user.page.checkout.index', compact('cartItems'), [
+            'title' => 'Halaman Checkout',
+        ]);
+    }
+
     public function process(Request $request)
     {
-        Log::info('Proses checkout dimulai');
-
         $request->validate([
             'nama' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
             'no_hp' => 'required|string|max:15',
         ]);
 
-        Log::info('Validasi berhasil');
-
         $cartItems = Cart::getContent();
         $total = Cart::getTotal();
 
-        Log::info('Item keranjang dan total diambil', ['cartItems' => $cartItems, 'total' => $total]);
-
+        // Simpan transaksi ke database
         $transaction = Transaction::create([
             'nama' => $request->nama,
             'alamat' => $request->alamat,
             'no_hp' => $request->no_hp,
             'total' => $total,
-            'status' => 'pending',
         ]);
-
-        Log::info('Transaksi dibuat', ['transaction' => $transaction]);
 
         foreach ($cartItems as $item) {
             TransactionDetail::create([
@@ -56,9 +56,8 @@ class CheckoutController extends Controller
             ]);
         }
 
-        Log::info('Detail transaksi disimpan');
-
-        $payload = [
+        // Memproses pembayaran dengan Midtrans
+        $params = [
             'transaction_details' => [
                 'order_id' => $transaction->id,
                 'gross_amount' => $total,
@@ -67,9 +66,9 @@ class CheckoutController extends Controller
                 'first_name' => $request->nama,
                 'email' => auth()->user()->email,
                 'phone' => $request->no_hp,
-                'shipping_address' => $request->alamat,
+                'address' => $request->alamat,
             ],
-            'item_details' => $cartItems->map(function($item) {
+            'item_details' => $cartItems->map(function ($item) {
                 return [
                     'id' => $item->id,
                     'price' => $item->price,
@@ -79,13 +78,13 @@ class CheckoutController extends Controller
             })->toArray(),
         ];
 
-        Log::info('Payload dibuat', ['payload' => $payload]);
-
-        $snapToken = Snap::getSnapToken($payload);
-
-        Log::info('Snap token dibuat', ['snapToken' => $snapToken]);
-
-        return view('user.page.checkout.payment', compact('snapToken', 'transaction'))->with('title', 'Halaman Pembayaran');
+        try {
+            $snapToken = Snap::getSnapToken($params);
+            return view('user.page.checkout.payment', compact('snapToken', 'transaction'))->with('title', 'Halaman Pembayaran');
+        } catch (\Exception $e) {
+            Log::error('Midtrans Error: ' . $e->getMessage());
+            return back()->with('error', 'Terjadi kesalahan saat memproses pembayaran.');
+        }
     }
 
     public function callback(Request $request)

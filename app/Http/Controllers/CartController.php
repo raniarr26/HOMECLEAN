@@ -25,7 +25,7 @@ class CartController extends Controller
     public function index()
     {
         $cartItems = Cart::getContent();
-        return view('user.page.cart.index',[
+        return view('user.page.cart.index', compact('cartItems'), [
             'title' => 'Halaman Keranjang',
         ]);
     }
