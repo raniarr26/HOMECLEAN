@@ -10,9 +10,9 @@ class CartController extends Controller
 {
     public function add(Request $request, $id)
     {
-        $product = Product::find($id);
+        $product = Product::where('product_id', $id)->first(); // Menggunakan 'product_id' untuk pencarian
         Cart::add([
-            'id' => $product->id,
+            'id' => $product->product_id, // Sesuaikan dengan 'product_id'
             'name' => $product->nama_product,
             'price' => $product->harga,
             'quantity' => 1,

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class AdminController extends Controller
 {
@@ -86,4 +89,58 @@ class AdminController extends Controller
 
         return redirect()->route('admin.page.users.index')->with('success', 'User promoted to admin');
     }
+
+    // Tambahkan metode berikut:
+    public function transactionHistory()
+    {
+        // Ambil semua transaksi
+        $transactions = Transaction::with('details.product')->get();
+    return view('admin.page.transactions.history', compact('transactions'), [
+            'title' => 'Halaman Utama',
+        ]);
+    }
+
+    public function updateTransactionStatus(Request $request, $id)
+    {
+        // Validasi input
+        $request->validate([
+            'status' => 'required|in:accepted,rejected'
+        ]);
+
+        // Update status transaksi
+        $transaction = Transaction::findOrFail($id);
+        $transaction->status = $request->status;
+        $transaction->save();
+
+        return redirect()->back()->with('success', 'Status transaksi berhasil diperbarui.');
+    }
+    public function print($id)
+{
+    $transaction = Transaction::findOrFail($id);
+    // return view untuk halaman cetak, atau generate PDF, atau menggunakan teknik cetak lainnya
+    return view('admin.page.transactions.print', compact('transaction'));
+}
+public function printPDF($id)
+{
+    $transaction = Transaction::findOrFail($id);
+
+    // Setelah mendapatkan data transaksi, buat objek Dompdf
+    $pdf = new Dompdf();
+    
+    // Buat konten PDF dari view blade
+    $pdf->loadHtml(view('admin.page.transactions.print', compact('transaction'))->render());
+    
+    // Atur opsi PDF jika diperlukan
+    $options = new Options();
+    $options->set('isHtml5ParserEnabled', true);
+    $options->set('isPhpEnabled', true);
+
+    $pdf->setOptions($options);
+
+    // Render PDF (akan menghasilkan output berupa string)
+    $pdf->render();
+
+    // Output PDF ke browser atau simpan ke file jika diinginkan
+    return $pdf->stream("transaction_$id.pdf");
+}
 }

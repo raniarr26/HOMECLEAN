@@ -30,30 +30,6 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
-        <!-- End of Carousel Section -->
-
-        <!-- Daftar produk atau konten lainnya -->
-        <div class="row">
-            <div class="col-md-3">
-                <div class="p-2 pt-4">
-                    <div class="card ml-2 mr-2" style="width: 16rem;">
-                        <img src="{{ asset('assets/img/Area_Rumah/260-1.Tipe 21.png') }}" class="card-img-top" alt="Gambar Produk">
-                        <div class="card-body bg-light">
-                            <h5 class="card-title">Tipe 21</h5>
-                            <p class="card-text">6 x 12</p>
-                            <p class="card-text">Rp 50.000,00</p>
-                            <div class="card-footer d-flex flex-row justify-content-between align-items-center">
-                                <p class="m-0" style="font-size: 16px; font-weight: 600;">Rp.250.000,00</p>
-                                <a href="{{ route('transaksi') }}" class="btn btn-outline-primary" style="font-size: 24px;">
-                                    <i class="fas fa-cart-plus"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Tambahkan produk lainnya di sini -->
-        </div>
     </div>
 </div>
 @endsection

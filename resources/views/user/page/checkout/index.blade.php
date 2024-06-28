@@ -2,10 +2,6 @@
 
 @section('content')
 <div class="container mt-5">
-@php
-    use Darryldecode\Cart\Facades\CartFacade as Cart;
-@endphp
-    <<div class="container mt-5">
     <h2>Checkout</h2>
 
     @if(session('success'))
@@ -14,7 +10,7 @@
         </div>
     @endif
 
-    <form id="payment-form" action="{{ route('checkout.process') }}" method="POST">
+    <form id="checkout-form" action="{{ route('checkout.process') }}" method="POST">
         @csrf
         <div class="row mb-3">
             <label for="nama" class="col-sm-2 col-form-label">Nama</label>
@@ -34,34 +30,53 @@
                 <input type="text" class="form-control" id="no_hp" name="no_hp" placeholder="Masukkan Nomor Handphone Anda" required>
             </div>
         </div>
-        <button id="pay-button" class="btn btn-success">
-            Bayar
-        </button>
+        <button type="button" id="pay-button" class="btn btn-success">Bayar Sekarang</button>
     </form>
 </div>
+@endsection
 
+@section('scripts')
 <script src="https://app.midtrans.com/snap/snap.js" data-client-key="{{ config('services.midtrans.clientKey') }}"></script>
 <script>
     document.getElementById('pay-button').onclick = function(event){
         event.preventDefault();
         this.disabled = true;
-        snap.pay('{{ $snapToken }}', {
-            onSuccess: function(result){
-                // handle success
-                console.log(result);
+        const form = document.getElementById('checkout-form');
+        const formData = new FormData(form);
+        
+        const url = "{{ route('checkout.process') }}"; // Simpan URL di variabel
+        const csrfToken = '{{ csrf_token() }}'; // Simpan CSRF token di variabel
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
             },
-            onPending: function(result){
-                // handle pending
-                console.log(result);
-            },
-            onError: function(result){
-                // handle error
-                console.log(result);
-            },
-            onClose: function(){
-                // handle close
-                console.log('customer closed the popup without finishing the payment');
-            }
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            snap.pay(data.snapToken, {
+                onSuccess: function(result){
+                    console.log(result);
+                    window.location.href = '/checkout/finish';
+                },
+                onPending: function(result){
+                    console.log(result);
+                },
+                onError: function(result){
+                    console.log(result);
+                    window.location.href = '/checkout/error';
+                },
+                onClose: function(){
+                    console.log('Pelanggan menutup popup tanpa menyelesaikan pembayaran');
+                    document.getElementById('pay-button').disabled = false;
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('pay-button').disabled = false;
         });
     };
 </script>

@@ -22,7 +22,7 @@
             
             </li>
             <li class="navbar-item">
-                <a href="#" class="text-white nav-link">
+                <a href="{{ route('page.transactions.history') }}" class="text-white nav-link">
                     <div class="d-flex gap-3">
                         <span class="material-icons">assignment</span>
                         <p class="m-0 p-0">Orders</p>

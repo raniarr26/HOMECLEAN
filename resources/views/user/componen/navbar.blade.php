@@ -54,7 +54,7 @@
       <a class="navbar-brand" href="#">HOME CLEAN</a>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
+          <a class="nav-link active" aria-current="page" href="/home">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/jasa">Jasa</a>
@@ -62,8 +62,11 @@
         <li class="nav-item">
           <a class="nav-link" href="/contact">Contact</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/history">History</a>
+        </li>
       </ul>
-      <a href="/checkout" class="btn btn-outline-secondary">
+      <a href="/cart" class="btn btn-outline-secondary">
         <i class="fa-solid fa-bag-shopping"></i>
       </a>
     </div>

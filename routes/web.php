@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\JasaController;
 use App\Http\Controllers\PurchaseController;
@@ -31,14 +32,21 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logout');
     // Produk
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
+Route::middleware(['auth'])->group(function () {
     // Checkout
-    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-    Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index')->middleware('auth');
+    Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process')->middleware('auth');
     Route::post('/checkout/callback', [CheckoutController::class, 'callback'])->name('checkout.callback');
-    Route::get('/checkout/finish', [CheckoutController::class, 'finish'])->name('checkout.finish');
-    Route::get('/checkout/unfinish', [CheckoutController::class, 'unfinish'])->name('checkout.unfinish');
-    Route::get('/checkout/error', [CheckoutController::class, 'error'])->name('checkout.error');
-
+    Route::get('/checkout/finish', function() {
+        return view('user.page.checkout.finish');
+    })->name('checkout.finish');
+    Route::get('/checkout/unfinish', function() {
+        return view('user.page.checkout.unfinish');
+    })->name('checkout.unfinish');
+    Route::get('/checkout/error', function() {
+        return view('user.page.checkout.error');
+    })->name('checkout.error');
+    
     // Keranjang
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
@@ -46,18 +54,18 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logout');
     Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
 
     // Transaksi
-    Route::post('/transaksi/store', [TransaksiController::class, 'store'])->name('transaksi.store');
+    
 
     // Resi pembelian
     Route::get('/receipt/{orderId}', [PurchaseController::class, 'showReceipt'])->name('purchase.receipt');
     // Riwayat pembelian
     Route::get('/history', [PurchaseController::class, 'history'])->name('purchase.history');
 
-
+});
 
 // Rute untuk admin yang memerlukan autentikasi dan peran admin
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.page.dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.page.dashboard');
     Route::get('/users', [UserManagementController::class, 'index'])->name('admin.page.users.index');
     Route::post('/admin/users/{id}/promote', [AdminController::class, 'promoteUser'])->name('admin.page.users.promote');
     Route::get('/admin/users/create', [AdminController::class, 'createUser'])->name('admin.page.users.create');
@@ -72,6 +80,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
     Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+    Route::get('/admin/transactions', [AdminController::class, 'transactionHistory'])->name('admin.page.transactions.history');
+    Route::post('/admin/transactions/{id}/status', [AdminController::class, 'updateTransactionStatus'])->name('admin.page.transactions.updateStatus');
+    Route::get('/admin/transactions/{id}/print', [AdminController::class, 'printPDF'])->name('admin.page.transactions.print');
+
+
 });
+
 
 // Rute untuk pengguna yang sudah login

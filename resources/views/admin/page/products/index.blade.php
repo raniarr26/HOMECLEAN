@@ -1,13 +1,13 @@
 @extends('admin.layout.index')
 
-@section('title', 'Tambah Produk')
+@section('title', 'Daftar Produk')
 
 @section('content')
 <div class="container mt-5">
-    <h1 class="mb-4">Tambah Produk</h1>
+    <h1 class="mb-4">Daftar Produk</h1>
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Daftar Produk</h3>
+            <h3 class="card-title">Tabel Produk</h3>
         </div>
         <div class="card-body">
             <table class="table table-bordered">
@@ -30,10 +30,10 @@
                         <td>{{ $product->harga }}</td>
                         <td>{{ $product->size }}</td>
                         <td>{{ $product->type }}</td>
-                        <td><img src="{{ asset('images/' . $product->image) }}" width="50" alt="image"></td>
+                        <td><img src="{{ asset('images/' . $product->image) }}" width="50" alt="Gambar Produk"></td>
                         <td>
-                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="d-inline">
+                            <a href="{{ route('products.edit', $product->product_id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ route('products.destroy', $product->product_id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm">Hapus</button>

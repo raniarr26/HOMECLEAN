@@ -12,7 +12,7 @@
                 <p class="card-text">Rp {{ number_format($product->harga, 2, ',', '.') }}</p>
                 <div class="card-footer d-flex justify-content-between align-items-center">
                     <p class="m-0" style="font-size: 16px; font-weight: 600;">Rp {{ number_format($product->harga, 2, ',', '.') }}</p>
-                    <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                    <form action="{{ route('cart.add', ['id' => $product->product_id]) }}" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-outline-primary" style="font-size: 24px;">
                             <i class="fas fa-cart-plus"></i>

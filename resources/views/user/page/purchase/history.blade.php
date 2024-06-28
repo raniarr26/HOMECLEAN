@@ -15,7 +15,15 @@
                     <p>Alamat: {{ $transaction->alamat }}</p>
                     <p>No HP: {{ $transaction->no_hp }}</p>
                     <p>Total: Rp {{ number_format($transaction->total, 2, ',', '.') }}</p>
-                    <p>Status: {{ $transaction->status }}</p>
+                    <p>Status: 
+                        @if ($transaction->status === 'pending')
+                            Belum Diterima
+                        @elseif ($transaction->status === 'received')
+                            Pesanan Diterima
+                        @else
+                            {{ $transaction->status }}
+                        @endif
+                    </p>
 
                     <h4>Detail Pembelian</h4>
                     <table class="table table-striped">

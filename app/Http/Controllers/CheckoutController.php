@@ -39,7 +39,6 @@ class CheckoutController extends Controller
         $cartItems = Cart::getContent();
         $total = Cart::getTotal();
 
-        // Simpan transaksi ke database
         $transaction = Transaction::create([
             'nama' => $request->nama,
             'alamat' => $request->alamat,
@@ -56,7 +55,6 @@ class CheckoutController extends Controller
             ]);
         }
 
-        // Memproses pembayaran dengan Midtrans
         $params = [
             'transaction_details' => [
                 'order_id' => $transaction->id,
@@ -80,10 +78,10 @@ class CheckoutController extends Controller
 
         try {
             $snapToken = Snap::getSnapToken($params);
-            return view('user.page.checkout.payment', compact('snapToken', 'transaction'))->with('title', 'Halaman Pembayaran');
+            return response()->json(['snapToken' => $snapToken]);
         } catch (\Exception $e) {
             Log::error('Midtrans Error: ' . $e->getMessage());
-            return back()->with('error', 'Terjadi kesalahan saat memproses pembayaran.');
+            return response()->json(['error' => 'Terjadi kesalahan saat memproses pembayaran.'], 500);
         }
     }
 

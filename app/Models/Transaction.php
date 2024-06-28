@@ -9,9 +9,14 @@ class Transaction extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'id',
         'nama',
         'alamat',
         'no_hp',
         'total',
     ];
+    public function details()
+    {
+        return $this->hasMany(TransactionDetail::class, 'transaction_id');
+    }
 }

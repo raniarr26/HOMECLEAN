@@ -67,8 +67,8 @@
             <li><a href="{{ route('admin.page.dashboard') }}" class="nav-link">Dashboard</a></li>
             <li><a href="{{ route('products.index') }}" class="nav-link">Product</a></li>
             <li><a href="{{ route('admin.page.users.index') }}" class="nav-link">Menambahkan User</a></li>
-            <li><a href="/report" class="nav-link">Report</a></li>
-            <li><a href="#" class="nav-link">Logout</a></li>
+            <li><a href="{{ route('admin.page.transactions.history') }}" class="nav-link">Report</a></li>
+            <li><a href="{{ route('logout') }}" class="nav-link">Logout</a></li>
         </ul>
     </aside>
     <main>

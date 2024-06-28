@@ -64,12 +64,12 @@
 <body>
     <nav class="navbar">
         <div class="logo">
-            <img src="logo.png" alt="Logo">
+            <img src={{ asset('assets/img/logo.jpg') }} alt="Logo">
             <span><span></span>Home Clean</span>
         </div>
-        <div>
+        <div>``
             <a href="#order" class="cta">Pesan Sekarang!</a>
         </div>
     </nav>
 </body>
-</html>
+</html>`

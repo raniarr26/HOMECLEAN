@@ -14,12 +14,12 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id();
+            $table->string('product_id')->primary();
             $table->string('nama_product');
-            $table->string('image');
+            $table->decimal('harga', 8, 2);
             $table->string('size');
-            $table->decimal('harga', 15, 2);
-            $table->string('type'); // Kolom 'type' ditambahkan di sini
+            $table->string('image')->nullable();
+            $table->string('type');
             $table->timestamps();
         });
     }
