@@ -23,27 +23,70 @@ class CheckoutController extends Controller
     public function index()
     {
         $cartItems = Cart::getContent();
-        return view('user.page.checkout.index', compact('cartItems'), [
+        return view('user.page.checkout.index', [
+            'cartItems' => $cartItems,
             'title' => 'Halaman Checkout',
         ]);
     }
 
-    public function process(Request $request)
+    public function showCheckoutForm()
     {
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'alamat' => 'required|string|max:255',
-            'no_hp' => 'required|string|max:15',
-        ]);
-
         $cartItems = Cart::getContent();
-        $total = Cart::getTotal();
+        return view('user.page.checkout.index', [
+            'cartItems' => $cartItems,
+            'title' => 'Halaman Checkout',
+        ]);
+    }
 
+    public function processCheckout(Request $request)
+{
+    $validatedData = $request->validate([
+        'nama' => 'required|string|max:255',
+        'alamat' => 'required|string|max:255',
+        'no_hp' => 'required|string|max:15',
+    ]);
+
+    $cartItems = Cart::getContent();
+    $total = Cart::getTotal();
+
+    // Log the total value
+    Log::info('Cart total: ' . $total);
+
+    // Ensure cart is not empty and total is valid
+    if ($cartItems->isEmpty() || $total <= 0) {
+        return back()->with('error', 'Keranjang belanja kosong atau total tidak valid.');
+    }
+
+    // Midtrans configuration
+    Config::$serverKey = config('services.midtrans.serverKey');
+    Config::$isProduction = config('services.midtrans.isProduction');
+    Config::$isSanitized = config('services.midtrans.isSanitized');
+    Config::$is3ds = config('services.midtrans.is3ds');
+
+    $params = [
+        'transaction_details' => [
+            'order_id' => uniqid(),
+            'gross_amount' => $total,
+        ],
+        'customer_details' => [
+            'first_name' => $validatedData['nama'],
+            'last_name' => '',
+            'email' => $request->user()->email ?? 'customer@example.com',
+            'phone' => $validatedData['no_hp'],
+        ],
+    ];
+
+    try {
+        // Get Snap Token from Midtrans
+        $snapToken = Snap::getSnapToken($params);
+
+        // Create transaction in your database with Snap Token
         $transaction = Transaction::create([
-            'nama' => $request->nama,
-            'alamat' => $request->alamat,
-            'no_hp' => $request->no_hp,
+            'nama' => $validatedData['nama'],
+            'alamat' => $validatedData['alamat'],
+            'no_hp' => $validatedData['no_hp'],
             'total' => $total,
+            'snap_token' => $snapToken, // Save Snap Token to database
         ]);
 
         foreach ($cartItems as $item) {
@@ -55,36 +98,16 @@ class CheckoutController extends Controller
             ]);
         }
 
-        $params = [
-            'transaction_details' => [
-                'order_id' => $transaction->id,
-                'gross_amount' => $total,
-            ],
-            'customer_details' => [
-                'first_name' => $request->nama,
-                'email' => auth()->user()->email,
-                'phone' => $request->no_hp,
-                'address' => $request->alamat,
-            ],
-            'item_details' => $cartItems->map(function ($item) {
-                return [
-                    'id' => $item->id,
-                    'price' => $item->price,
-                    'quantity' => $item->quantity,
-                    'name' => $item->name,
-                ];
-            })->toArray(),
-        ];
-
-        try {
-            $snapToken = Snap::getSnapToken($params);
-            return response()->json(['snapToken' => $snapToken]);
-        } catch (\Exception $e) {
-            Log::error('Midtrans Error: ' . $e->getMessage());
-            return response()->json(['error' => 'Terjadi kesalahan saat memproses pembayaran.'], 500);
-        }
+        return view('user.page.checkout.payment', [
+            'snapToken' => $snapToken,
+            'cartItems' => $cartItems,
+            'title' => 'Halaman Checkout',
+        ]);
+    } catch (\Exception $e) {
+        Log::error('Midtrans error: ' . $e->getMessage());
+        return back()->with('error', 'Error processing payment: ' . $e->getMessage());
     }
-
+}
     public function callback(Request $request)
     {
         $serverKey = config('services.midtrans.serverKey');

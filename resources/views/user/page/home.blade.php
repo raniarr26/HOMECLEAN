@@ -31,5 +31,14 @@
             </a>
         </div>
     </div>
+    <div class="col-10">
+        <div class="card">
+            <div class="card-body text-center">
+                <h2>Tentang Kami</h2><br>
+                <p>Selamat Datang di HomeClean, Silahkan Untuk Memesan layanan yang Anda Inginkan</p>
+                <a href="{{ route('jasa.index') }}" class="btn btn-primary">Pesan</a>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

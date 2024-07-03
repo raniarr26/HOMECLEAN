@@ -32,36 +32,34 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logout');
     // Produk
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
-Route::middleware(['auth'])->group(function () {
-    // Checkout
-    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index')->middleware('auth');
-    Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process')->middleware('auth');
-    Route::post('/checkout/callback', [CheckoutController::class, 'callback'])->name('checkout.callback');
-    Route::get('/checkout/finish', function() {
-        return view('user.page.checkout.finish');
-    })->name('checkout.finish');
-    Route::get('/checkout/unfinish', function() {
-        return view('user.page.checkout.unfinish');
-    })->name('checkout.unfinish');
-    Route::get('/checkout/error', function() {
-        return view('user.page.checkout.error');
-    })->name('checkout.error');
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+        Route::post('/checkout/process', [CheckoutController::class, 'processCheckout'])->name('checkout.process');
+        Route::get('/checkout/finish', function() {
+            return view('user.page.checkout.finish');
+        })->name('checkout.finish');
+        Route::get('/checkout/unfinish', function() {
+            return view('user.page.checkout.unfinish');
+        })->name('checkout.unfinish');
+        Route::get('/checkout/error', function() {
+            return view('user.page.checkout.error');
+        })->name('checkout.error');
     
-    // Keranjang
-    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-    Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
-    Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
-    Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
-
-    // Transaksi
+        // Rute Keranjang Belanja
+        Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+        Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
+        Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
+        Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
     
-
-    // Resi pembelian
-    Route::get('/receipt/{orderId}', [PurchaseController::class, 'showReceipt'])->name('purchase.receipt');
-    // Riwayat pembelian
-    Route::get('/history', [PurchaseController::class, 'history'])->name('purchase.history');
-
-});
+        // Transaksi
+        // (other transaction-related routes)
+        
+        // Resi pembelian
+        Route::get('/receipt/{orderId}', [PurchaseController::class, 'showReceipt'])->name('purchase.receipt');
+        // Riwayat pembelian
+        Route::get('/history', [PurchaseController::class, 'history'])->name('purchase.history');
+    });
+    
 
 // Rute untuk admin yang memerlukan autentikasi dan peran admin
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
